@@ -8,12 +8,14 @@ import com.example.college_placement_website.college_placement_website.resposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private FacultyRepository facultyRepository;
@@ -24,6 +26,7 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         UserDetails result;
