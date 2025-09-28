@@ -37,11 +37,12 @@ public class Faculty {
 
     public Faculty(){}
 
-    public Faculty(String username,String password,String email,String department)
+    public Faculty(String username,String password,String fullName,String email,String department)
     {
         this.username=username;
         this.password=password;
         this.email=email;
+        this.fullName=fullName;
         this.department=department;
     }
 

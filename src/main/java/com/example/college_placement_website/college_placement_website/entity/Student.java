@@ -1,5 +1,6 @@
 package com.example.college_placement_website.college_placement_website.entity;
 
+import com.example.college_placement_website.college_placement_website.enums.PlacementStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -50,12 +51,15 @@ public class Student {
     @Column(nullable = false)
     private SSC ssc;
 
+    @Column(nullable = false)
+    private PlacementStatus placementStatus;
+
     @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private List<Placement> placements=new ArrayList<>();
 
     public Student(){}
 
-    public Student(String prn,String fullName,String Email,String department,String personalEmail,String phoneNo,Double cgpa,Integer graduationYear,String gender,String degree,SSC ssc,Qualification qualification,List<Placement>placements)
+    public Student(String prn,String fullName,String Email,String department,String personalEmail,String phoneNo,Double cgpa,Integer graduationYear,String gender,String degree,SSC ssc,Qualification qualification,PlacementStatus placementStatus,List<Placement>placements)
     {
         this.prn=prn;
         this.fullName=fullName;
@@ -68,6 +72,7 @@ public class Student {
         this.graduationYear=graduationYear;
         this.qualification=qualification;
         this.ssc=ssc;
+        this.placementStatus=placementStatus;
         this.placements=placements;
     }
 
