@@ -1,0 +1,91 @@
+<!-- Location: src/main/resources/templates/public/department-stats.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+    <nav th:replace="~{fragments/header :: navbar}"></nav>
+    
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <i class="fas fa-chart-pie"></i> 
+                <span th:text="${department}">Department</span> Statistics - <span th:text="${year}">2025</span>
+            </h2>
+            <a th:href="@{/}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+        
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-users"></i></div>
+                    <h3 th:text="${stats.totalPlacements}">0</h3>
+                    <p>Total Placements</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-rupee-sign"></i></div>
+                    <h3 th:text="${#numbers.formatDecimal(stats.averageCTC, 1, 2)} + ' LPA'">0 LPA</h3>
+                    <p>Average CTC</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <h3 th:text="${#numbers.formatDecimal(stats.totalStipend, 1, 2)} + ' L'">0 L</h3>
+                    <p>Total Stipend</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Placements -->
+        <div class="table-container">
+            <h4><i class="fas fa-list-alt"></i> Detailed Placement Records</h4>
+            <div class="table-responsive">
+                <table class="table table-hover" id="deptPlacementTable">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Roll Number</th>
+                            <th>CGPA</th>
+                            <th>Company</th>
+                            <th>Job Title</th>
+                            <th>CTC (LPA)</th>
+                            <th>Stipend</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="placement : ${placements}">
+                            <td th:text="${placement.student.fullName}">Student Name</td>
+                            <td th:text="${placement.student.rollNumber}">CS001</td>
+                            <td th:text="${placement.student.cgpa}">8.5</td>
+                            <td>
+                                <strong th:text="${placement.company.companyName}">Google</strong>
+                            </td>
+                            <td th:text="${placement.jobTitle}">Software Engineer</td>
+                            <td>
+                                <span class="badge bg-success" th:text="${placement.ctcAmount} + ' LPA'">12.5 LPA</span>
+                            </td>
+                            <td>
+                                <span th:if="${placement.stipendAmount != null}" 
+                                      th:text="${placement.stipendAmount} + ' K'">50 K</span>
+                                <span th:unless="${placement.stipendAmount != null}" class="text-muted">N/A</span>
+                            </td>
+                            <td th:text="${placement.workLocation}">Bangalore</td>
+                            <td th:text="${#temporals.format(placement.placementDate, 'dd MMM yyyy')}">01 Jan 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>
