@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+    <nav th:replace="~{fragments/header :: navbar}"></nav>
+    
+    <div class="container mt-4">
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show">
+            <i class="fas fa-check-circle"></i> <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show">
+            <i class="fas fa-exclamation-circle"></i> <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <div class="form-container">
+            <h4><i class="fas fa-plus-circle"></i> Add New Placement Record</h4>
+            <hr>
+            
+            <form th:action="@{/admin/placements/add}" th:object="${placementDto}" method="post">
+                
+                <div class="mb-3">
+                    <label for="student" class="form-label">Student</label>
+                    <select id="student" class="form-select" th:field="*{studentId}" required>
+                        <option value="">-- Select a Student --</option>
+                        <option th:each="student : ${students}" 
+                                th:value="${student.id}" 
+                                th:text="${student.fullName} + ' (' + ${student.department} + ')'"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="company" class="form-label">Company</label>
+                    <select id="company" class="form-select" th:field="*{companyId}" required>
+                        <option value="">-- Select a Company --</option>
+                        <option th:each="company : ${companies}" 
+                                th:value="${company.id}" 
+                                th:text="${company.companyName}"></option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ctcAmount" class="form-label">CTC (in LPA)</label>
+                    <input type="number" step="0.01" class="form-control" id="ctcAmount" th:field="*{ctcAmount}" placeholder="e.g., 12.5" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="placementDate" class="form-label">Placement Date</label>
+                    <input type="date" class="form-control" id="placementDate" th:field="*{placementDate}" required>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Placement
+                    </button>
+                    <a th:href="@{/admin/dashboard}" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>
