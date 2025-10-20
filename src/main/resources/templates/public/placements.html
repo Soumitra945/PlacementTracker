@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head}"></head>
+<body>
+    <nav th:replace="~{fragments/header :: navbar}"></nav>
+    
+    <div class="container mt-5">
+        <h2 class="mb-4"><i class="fas fa-briefcase"></i> All Placements</h2>
+        
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <h5><i class="fas fa-filter"></i> Filter Placements</h5>
+            <form th:action="@{/placements}" method="get" class="row g-3">
+                <div class="col-md-5">
+                    <label class="form-label">Department</label>
+                    <select name="department" class="form-select">
+                        <option value="">All Departments</option>
+                        <option th:each="dept : ${departments}" 
+                                th:value="${dept}" 
+                                th:text="${dept}"
+                                th:selected="${dept == selectedDept}"></option>
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <label class="form-label">Year</label>
+                    <select name="year" class="form-select">
+                        <option value="">All Years</option>
+                        <option th:each="year : ${years}" 
+                                th:value="${year}" 
+                                th:text="${year}"
+                                th:selected="${year == selectedYear}"></option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">&nbsp;</label>
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="fas fa-search"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Search Box -->
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" 
+                   placeholder="Search by student name, company, or role..." 
+                   onkeyup="filterTable('searchInput', 'placementTable')">
+        </div>
+        
+        <!-- Placements Table -->
+        <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4><i class="fas fa-list"></i> Placement Records</h4>
+                <button onclick="exportTableToCSV('placementTable', 'placements.csv')" class="btn btn-success">
+                    <i class="fas fa-file-csv"></i> Export to CSV
+                </button>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover" id="placementTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('placementTable', 0)" style="cursor: pointer;">
+                                Student Name <i class="fas fa-sort"></i>
+                            </th>
+                            <th>Roll Number</th>
+                            <th>Department</th>
+                            <th>Year</th>
+                            <th onclick="sortTable('placementTable', 4)" style="cursor: pointer;">
+                                Company <i class="fas fa-sort"></i>
+                            </th>
+                            <th>Job Title</th>
+                            <th onclick="sortTable('placementTable', 6)" style="cursor: pointer;">
+                                CTC (LPA) <i class="fas fa-sort"></i>
+                            </th>
+                            <th>Type</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="placement : ${placements}">
+                            <td th:text="${placement.student.fullName}">Student Name</td>
+                            <td th:text="${placement.student.rollNumber}">CS001</td>
+                            <td th:text="${placement.student.department}">Computer Science</td>
+                            <td th:text="${placement.student.graduationYear}">2025</td>
+                            <td>
+                                <strong th:text="${placement.company.companyName}">Google</strong>
+                            </td>
+                            <td th:text="${placement.jobTitle}">Software Engineer</td>
+                            <td>
+                                <span class="badge bg-success" th:text="${placement.ctcAmount} + ' LPA'">12.5 LPA</span>
+                            </td>
+                            <td>
+                                <span th:class="'badge badge-' + ${#strings.toLowerCase(placement.placementType)}" 
+                                      th:text="${placement.placementType}">FULL_TIME</span>
+                            </td>
+                            <td th:text="${#temporals.format(placement.placementDate, 'dd MMM yyyy')}">01 Jan 2025</td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(placements)}">
+                            <td colspan="9" class="text-center text-muted">
+                                <i class="fas fa-info-circle"></i> No placement records found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <footer th:replace="~{fragments/footer :: footer}"></footer>
+    <div th:replace="~{fragments/footer :: scripts}"></div>
+</body>
+</html>
