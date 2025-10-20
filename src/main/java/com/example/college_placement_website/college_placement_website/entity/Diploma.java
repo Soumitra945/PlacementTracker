@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="diploma")
 @Getter
 @Setter
 public class Diploma extends Qualification{

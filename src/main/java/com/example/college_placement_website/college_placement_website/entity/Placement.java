@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "placements")
+@Table(name = "placement")
 @Getter
 @Setter
 
@@ -23,13 +23,9 @@ public class Placement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name="placement_students",
-            joinColumns = @JoinColumn(name="placement_id"),
-            inverseJoinColumns = @JoinColumn(name="student_id")
-    )
-    private List<Student> students=new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="student_id",nullable = false)
+    private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id",nullable = false)
@@ -65,7 +61,7 @@ public class Placement {
 
     public Placement(List<Student>students,Company company,String jobTitle,Double ctcAmount,LocalDate placementDate)
     {
-        this.students=students;
+        this.student=student;
         this.company=company;
         this.jobTitle=jobTitle;
         this.ctcAmount=ctcAmount;

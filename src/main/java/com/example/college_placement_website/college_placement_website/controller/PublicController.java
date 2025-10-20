@@ -22,13 +22,17 @@ public class PublicController {
     private StudentRepository studentRepository;
 
     @GetMapping
-    public String dashboard(Model model)
-    {
-        DashboardStatsDto stats=placementService.getDashboardStats();
-        model.addAttribute("stats",stats);
-        model.addAttribute("departmentstats",placementService.getDepartmentWiseStats());
-        model.addAttribute("departments",studentRepository.findAllDepartments());
-        model.addAttribute("years",studentRepository.findAllGraduationYears());
+    public String dashboard(Model model) {
+        try {
+            DashboardStatsDto stats = placementService.getDashboardStats();
+            model.addAttribute("stats", stats);
+            model.addAttribute("departmentStats", placementService.getDepartmentWiseStats());
+            model.addAttribute("departments", studentRepository.findAllDepartments());
+            model.addAttribute("years", studentRepository.findAllGraduationYears());
+        } catch (Exception e) {
+            // Handle empty database gracefully
+            model.addAttribute("error", "No data available yet. Please add students and placements through admin panel.");
+        }
         return "public/dashboard";
     }
 

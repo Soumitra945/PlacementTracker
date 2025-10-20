@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty,Long> {
 
-    Optional<Faculty>findByUserName(String username);
+    Optional<Faculty>findByUsername(String username);
     Optional<Faculty>findByFullName(String fullName);
     Optional<Faculty>findByEmail(String email);
 

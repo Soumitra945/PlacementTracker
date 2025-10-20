@@ -3,10 +3,12 @@ package com.example.college_placement_website.college_placement_website.service;
 import com.example.college_placement_website.college_placement_website.entity.Company;
 import com.example.college_placement_website.college_placement_website.respository.CompanyRespository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class CompanyService {
 
     @Autowired
@@ -24,7 +26,7 @@ public class CompanyService {
 
     public Optional<Company> getCompanyByName(String name)
     {
-        return companyRespository.findByCompanyName(name);
+        return companyRespository.findBycompanyName(name);
     }
 
     public Company saveCompany(Company company)

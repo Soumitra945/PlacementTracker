@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="hsc")
 @Getter
 @Setter
 public class HSC extends Qualification{

@@ -9,7 +9,7 @@ import java.util.Optional;
 @Repository
 public interface CoordinatorRepository extends JpaRepository<Coordinator,Long> {
 
-    Optional<Coordinator>findByUserName(String username);
+    Optional<Coordinator>findByUsername(String username);
     Optional<Coordinator>findByEmail(String email);
 
 }

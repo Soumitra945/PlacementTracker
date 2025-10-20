@@ -28,6 +28,7 @@ public class Coordinator {
     private String email;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Role role=Role.COORDINATOR;
 
     private boolean active=true;

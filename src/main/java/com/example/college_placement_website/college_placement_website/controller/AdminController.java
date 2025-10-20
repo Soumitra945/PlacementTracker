@@ -89,7 +89,7 @@ public class AdminController {
         return "redirect:/admin/dashboard";
     }
 
-    @PostMapping("/add-student")
+    @GetMapping("/add-student")
     public String addStudentForm(Model model)
     {
         model.addAttribute("student",new Student());

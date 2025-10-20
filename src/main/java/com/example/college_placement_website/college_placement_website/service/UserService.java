@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService implements UserDetailsService {
 
     @Autowired
@@ -30,7 +31,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
         UserDetails result;
-        Optional<Faculty>faculty=facultyRepository.findByUserName(username);
+        Optional<Faculty>faculty=facultyRepository.findByUsername(username);
         if(faculty.isPresent())
         {
             Faculty f=faculty.get();
@@ -40,7 +41,7 @@ public class UserService implements UserDetailsService {
                     .roles("FACULTY")
                     .build();
         } else {
-            Optional<Coordinator>coordinator=coordinatorRepository.findByUserName(username);
+            Optional<Coordinator>coordinator=coordinatorRepository.findByUsername(username);
             if(coordinator.isPresent())
             {
                 Coordinator c=coordinator.get();

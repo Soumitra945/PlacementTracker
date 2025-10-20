@@ -42,13 +42,15 @@ public class Student {
     @Column(nullable = false)
     private String phoneNo;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "qualification_id")
     private Qualification qualification;
 
     @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ssc_id")
     private SSC ssc;
 
     @Column(nullable = false)
